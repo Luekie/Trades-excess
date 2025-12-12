@@ -8,7 +8,7 @@ import AssetDetail from './pages/AssetDetail'
 function App() {
   return (
     <Provider>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-ios-gray-50 via-white to-ios-gray-100">
         <Navbar />
         <main className="container mx-auto px-4 py-8">
           <Router>
@@ -18,7 +18,10 @@ function App() {
               <Route path="/asset/:symbol" component={AssetDetail} />
               <Route>
                 <div className="text-center py-20">
-                  <h2 className="text-2xl font-bold text-gray-600">Page Not Found</h2>
+                  <div className="card-glass max-w-md mx-auto">
+                    <h2 className="text-2xl font-bold text-ios-gray-600 mb-2">Page Not Found</h2>
+                    <p className="text-ios-gray-500">The page you're looking for doesn't exist.</p>
+                  </div>
                 </div>
               </Route>
             </Switch>

@@ -43,11 +43,16 @@ export default function Predictions() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-2">
-            <Brain className="h-8 w-8 text-primary-500" />
-            <span>{isChildMode ? '🔮 AI Predictions!' : 'AI Market Predictions'}</span>
-          </h1>
-          <p className="text-gray-600 mt-2">
+          <div className="flex items-center space-x-4 mb-3">
+            <div className="p-3 bg-gradient-to-br from-ios-purple to-ios-pink rounded-ios-lg shadow-ios">
+              <Brain className="h-6 w-6 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-ios-gray-900">
+              {isChildMode ? 'AI Predictions!' : 'AI Market Predictions'}
+            </h1>
+            {isChildMode && <span className="text-3xl">🔮</span>}
+          </div>
+          <p className="text-ios-gray-600 text-lg">
             {isChildMode ? 
               'Our smart computer tries to guess where prices will go!' :
               'AI-powered predictions for market direction across different timeframes'
@@ -62,30 +67,37 @@ export default function Predictions() {
       </div>
 
       {isChildMode && (
-        <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4">
-          <h3 className="font-semibold text-purple-800 mb-2">🤖 How AI Predictions Work</h3>
-          <p className="text-purple-700 text-sm">
+        <div className="bg-gradient-to-r from-ios-purple/10 to-ios-pink/10 border-2 border-ios-purple/20 rounded-ios-xl p-6 shadow-ios">
+          <div className="flex items-center space-x-3 mb-3">
+            <span className="text-2xl">🤖</span>
+            <h3 className="font-bold text-ios-purple text-lg">How AI Predictions Work</h3>
+          </div>
+          <p className="text-ios-purple/80 font-medium">
             Our computer looks at lots of information about stocks and currencies, then makes smart guesses about 
             whether prices will go up or down. Remember, these are just guesses - nobody can predict the future perfectly!
           </p>
         </div>
       )}
 
-      <div className="flex items-center space-x-2 mb-6">
-        <Clock className="h-5 w-5 text-gray-500" />
-        <span className="text-sm font-medium text-gray-700">
-          {isChildMode ? 'Pick a time:' : 'Select Timeframe:'}
-        </span>
-        <div className="flex space-x-2">
+      <div className="card-glass">
+        <div className="flex items-center space-x-3 mb-4">
+          <div className="p-2 bg-gradient-to-br from-ios-blue to-ios-purple rounded-ios shadow-ios">
+            <Clock className="h-5 w-5 text-white" />
+          </div>
+          <span className="text-lg font-bold text-ios-gray-700">
+            {isChildMode ? 'Pick a time:' : 'Select Timeframe:'}
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-3">
           {timeframes.map((timeframe) => (
             <button
               key={timeframe.key}
               onClick={() => setSelectedTimeframe(timeframe.key)}
               className={clsx(
-                'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
+                'px-4 py-3 rounded-ios text-sm font-bold transition-all duration-200 shadow-ios',
                 selectedTimeframe === timeframe.key
-                  ? 'bg-primary-500 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-ios-blue text-white scale-105'
+                  : 'bg-ios-gray-100 text-ios-gray-700 hover:bg-ios-gray-200 hover:scale-105'
               )}
             >
               {isChildMode ? timeframe.childLabel : timeframe.label}
@@ -96,44 +108,63 @@ export default function Predictions() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="flex items-center space-x-2">
-            <RefreshCw className="h-5 w-5 animate-spin text-primary-500" />
-            <span className="text-gray-600">
+          <div className="card-glass max-w-md mx-auto text-center">
+            <div className="flex items-center justify-center space-x-3 mb-4">
+              <div className="p-3 bg-gradient-to-br from-ios-purple to-ios-pink rounded-full">
+                <RefreshCw className="h-6 w-6 animate-spin text-white" />
+              </div>
+            </div>
+            <span className="text-ios-gray-700 font-medium">
               {isChildMode ? 'AI is thinking...' : 'Loading predictions...'}
             </span>
           </div>
         </div>
       ) : error ? (
         <div className="flex items-center justify-center py-20">
-          <div className="text-center">
-            <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <div className="card-glass max-w-md mx-auto text-center">
+            <div className="p-4 bg-ios-red/10 rounded-full w-fit mx-auto mb-4">
+              <AlertCircle className="h-12 w-12 text-ios-red" />
+            </div>
+            <h2 className="text-xl font-bold text-ios-gray-900 mb-2">
               {isChildMode ? 'Oops! AI is having trouble' : 'Error Loading Predictions'}
             </h2>
-            <p className="text-gray-600 mb-4">{error}</p>
+            <p className="text-ios-gray-600 mb-6">{error}</p>
             <button onClick={loadPredictions} className="btn-primary">
               Try Again
             </button>
           </div>
         </div>
       ) : Object.keys(currentPredictions).length === 0 ? (
-        <div className="text-center py-20">
-          <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-600">
-            {isChildMode ? 'No predictions yet!' : 'No predictions available'}
-          </h2>
-          <p className="text-gray-500">
-            {isChildMode ? 'Try refreshing to get new predictions!' : 'Try refreshing or select a different timeframe'}
-          </p>
+        <div className="flex items-center justify-center py-20">
+          <div className="card-glass max-w-md mx-auto text-center">
+            <div className="p-4 bg-ios-gray-100 rounded-full w-fit mx-auto mb-4">
+              <Brain className="h-12 w-12 text-ios-gray-400" />
+            </div>
+            <h2 className="text-xl font-bold text-ios-gray-600 mb-2">
+              {isChildMode ? 'No predictions yet!' : 'No predictions available'}
+            </h2>
+            <p className="text-ios-gray-500">
+              {isChildMode ? 'Try refreshing to get new predictions!' : 'Try refreshing or select a different timeframe'}
+            </p>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.entries(currentPredictions).map(([symbol, prediction]) => (
-            <div key={symbol}>
-              <h3 className="font-semibold text-gray-900 mb-3 flex items-center space-x-2">
-                <span>{symbol}</span>
-                {isChildMode && <span className="text-sm text-gray-500">({prediction.friendlyName})</span>}
-              </h3>
+            <div key={symbol} className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-gradient-to-br from-ios-gray-600 to-ios-gray-700 rounded-ios shadow-ios">
+                  <span className="text-white font-bold text-sm">{symbol.slice(0, 2)}</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-ios-gray-900">{symbol}</h3>
+                  {isChildMode && (
+                    <p className="text-sm text-ios-gray-500 font-medium">
+                      {prediction.friendlyName}
+                    </p>
+                  )}
+                </div>
+              </div>
               <PredictionCard prediction={prediction} timeframe={selectedTimeframe} />
             </div>
           ))}
@@ -141,11 +172,14 @@ export default function Predictions() {
       )}
 
       {!loading && !error && Object.keys(currentPredictions).length > 0 && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <h3 className="font-semibold text-yellow-800 mb-2">
-            {isChildMode ? '⚠️ Important Reminder!' : '⚠️ Disclaimer'}
-          </h3>
-          <p className="text-yellow-700 text-sm">
+        <div className="bg-gradient-to-r from-ios-yellow/10 to-ios-orange/10 border-2 border-ios-yellow/20 rounded-ios-xl p-6 shadow-ios">
+          <div className="flex items-center space-x-3 mb-3">
+            <span className="text-2xl">⚠️</span>
+            <h3 className="font-bold text-ios-orange text-lg">
+              {isChildMode ? 'Important Reminder!' : 'Disclaimer'}
+            </h3>
+          </div>
+          <p className="text-ios-orange/80 font-medium">
             {isChildMode ? 
               'These are just smart guesses! Real trading involves real money and can be risky. Always ask a grown-up before making any money decisions!' :
               'These predictions are for educational purposes only. Past performance does not guarantee future results. Always consult with a financial advisor before making investment decisions.'

@@ -13,27 +13,29 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className="bg-white shadow-sm border-b">
+    <nav className="navbar-blur sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
             <Link href="/">
-              <div className="flex items-center space-x-2">
-                <BarChart3 className="h-8 w-8 text-primary-500" />
-                <span className="text-xl font-bold text-gray-900">TradingDash</span>
+              <div className="flex items-center space-x-3 hover:scale-105 transition-transform duration-200">
+                <div className="p-2 bg-gradient-to-br from-ios-blue to-ios-purple rounded-ios shadow-ios">
+                  <BarChart3 className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-xl font-bold text-ios-gray-900">TradingDash</span>
               </div>
             </Link>
             
-            <div className="flex space-x-4">
+            <div className="flex space-x-2">
               {navItems.map(({ path, label, icon: Icon }) => (
                 <Link key={path} href={path}>
-                  <div className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+                  <div className={`flex items-center space-x-2 px-4 py-2 rounded-ios transition-all duration-200 ${
                     location === path 
-                      ? 'bg-primary-50 text-primary-600' 
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'bg-ios-blue/10 text-ios-blue shadow-ios border border-ios-blue/20' 
+                      : 'text-ios-gray-600 hover:text-ios-gray-900 hover:bg-ios-gray-100/50'
                   }`}>
                     <Icon className="h-4 w-4" />
-                    <span>{label}</span>
+                    <span className="font-medium">{label}</span>
                   </div>
                 </Link>
               ))}
@@ -43,10 +45,10 @@ export default function Navbar() {
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setIsChildMode(!isChildMode)}
-              className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
+              className={`flex items-center space-x-2 px-4 py-2 rounded-ios font-medium transition-all duration-200 ${
                 isChildMode 
-                  ? 'bg-yellow-100 text-yellow-700' 
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-ios-orange/10 text-ios-orange border border-ios-orange/20 shadow-ios' 
+                  : 'bg-ios-gray-100 text-ios-gray-700 hover:bg-ios-gray-200 border border-ios-gray-200'
               }`}
             >
               {isChildMode ? <Baby className="h-4 w-4" /> : <User className="h-4 w-4" />}
