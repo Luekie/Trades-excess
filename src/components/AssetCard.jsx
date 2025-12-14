@@ -11,7 +11,7 @@ export default function AssetCard({ asset }) {
   const Icon = asset.type === 'stock' ? TrendingUp : Coins
 
   return (
-    <Link href={`/asset/${asset.symbol}`}>
+    <Link href={`/asset/${encodeURIComponent(asset.symbol)}`}>
       <div className={clsx(
         'card hover:shadow-ios-lg hover:scale-105 transition-all duration-300 cursor-pointer group',
         isChildMode && 'border-2 border-dashed border-ios-blue/30 bg-gradient-to-br from-ios-blue/5 to-ios-purple/5'

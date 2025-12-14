@@ -122,29 +122,28 @@ const generatePrediction = (currentPrice, timeframe) => {
 
 export const fetchMarketData = async () => {
   try {
-    // In production, this would be a real API call
-    // const response = await axios.get(`${API_BASE}/market-data`)
-    // return response.data
-    
-    // Mock implementation
-    await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate network delay
-    
+    const response = await axios.get(`${API_BASE}/market-data`)
+    return response.data
+  } catch (error) {
+    console.error('API Error:', error)
+    // Fallback to mock data if API fails
+    await new Promise(resolve => setTimeout(resolve, 1000))
     return {
       stocks: mockStocks,
       currencies: mockCurrencies,
       lastUpdated: new Date().toISOString()
     }
-  } catch (error) {
-    throw new Error('Failed to fetch market data')
   }
 }
 
 export const fetchPredictions = async (timeframe) => {
   try {
-    // In production: const response = await axios.get(`${API_BASE}/predictions/${timeframe}`)
-    
+    const response = await axios.get(`${API_BASE}/predictions/${timeframe}`)
+    return response.data
+  } catch (error) {
+    console.error('API Error:', error)
+    // Fallback to mock data if API fails
     await new Promise(resolve => setTimeout(resolve, 800))
-    
     const allAssets = [...mockStocks, ...mockCurrencies]
     const predictions = {}
     
@@ -156,17 +155,17 @@ export const fetchPredictions = async (timeframe) => {
     })
     
     return predictions
-  } catch (error) {
-    throw new Error('Failed to fetch predictions')
   }
 }
 
 export const fetchAssetDetail = async (symbol) => {
   try {
-    // In production: const response = await axios.get(`${API_BASE}/assets/${symbol}`)
-    
+    const response = await axios.get(`${API_BASE}/assets/${symbol}`)
+    return response.data
+  } catch (error) {
+    console.error('API Error:', error)
+    // Fallback to mock data if API fails
     await new Promise(resolve => setTimeout(resolve, 600))
-    
     const allAssets = [...mockStocks, ...mockCurrencies]
     const asset = allAssets.find(a => a.symbol === symbol)
     
@@ -178,17 +177,17 @@ export const fetchAssetDetail = async (symbol) => {
       asset,
       chartData: generateChartData(asset.price)
     }
-  } catch (error) {
-    throw new Error('Failed to fetch asset details')
   }
 }
 
 export const fetchAssetPredictions = async (symbol) => {
   try {
-    // In production: const response = await axios.get(`${API_BASE}/assets/${symbol}/predictions`)
-    
+    const response = await axios.get(`${API_BASE}/assets/${symbol}/predictions`)
+    return response.data
+  } catch (error) {
+    console.error('API Error:', error)
+    // Fallback to mock data if API fails
     await new Promise(resolve => setTimeout(resolve, 400))
-    
     const allAssets = [...mockStocks, ...mockCurrencies]
     const asset = allAssets.find(a => a.symbol === symbol)
     
@@ -204,7 +203,5 @@ export const fetchAssetPredictions = async (symbol) => {
     })
     
     return predictions
-  } catch (error) {
-    throw new Error('Failed to fetch asset predictions')
   }
 }

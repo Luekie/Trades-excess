@@ -4,13 +4,14 @@ import { useAtom } from 'jotai'
 import { isChildModeAtom, loadingAtom, errorAtom } from '../store/atoms'
 import Chart from '../components/Chart'
 import PredictionCard from '../components/PredictionCard'
-import { RefreshCw, AlertCircle, TrendingUp, TrendingDown, ArrowLeft } from 'lucide-react'
+import { RefreshCw, AlertCircle, TrendingUp, TrendingDown, ArrowLeft, DollarSign, Brain, Clock } from 'lucide-react'
 import { fetchAssetDetail, fetchAssetPredictions } from '../services/api'
 import { Link } from 'wouter'
 import clsx from 'clsx'
 
 export default function AssetDetail() {
-  const { symbol } = useParams()
+  const { symbol: encodedSymbol } = useParams()
+  const symbol = decodeURIComponent(encodedSymbol || '')
   const [isChildMode] = useAtom(isChildModeAtom)
   const [loading, setLoading] = useAtom(loadingAtom)
   const [error, setError] = useAtom(errorAtom)
